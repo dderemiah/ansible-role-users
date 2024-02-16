@@ -27,6 +27,7 @@
     update_password: "{{ user.update_password | default(omit) }}"
     expires: "{{ user.expires | default(omit) }}"
     system: "{{ user.system | default(omit) }}"
+    non_unique: "{{ user.non_unique | default(omit) }}"
   register: users_manage_user
 
 - name: user | Set sudo options for {{ user.name }}
