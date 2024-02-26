@@ -44,7 +44,7 @@
   ansible.builtin.template:
     src: cron.allow.j2
     dest: /etc/cron.allow
-    mode: "0644"
+    mode: "0640"
   when:
     - users_cron_allow
 
