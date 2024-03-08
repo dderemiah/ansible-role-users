@@ -28,7 +28,20 @@
     expires: "{{ user.expires | default(omit) }}"
     system: "{{ user.system | default(omit) }}"
     non_unique: "{{ user.non_unique | default(omit) }}"
+    force: "{{ user.force | default(omit) }}"
+    remove: "{{ user.remove | default('true') }}"
   register: users_manage_user
+# - name: Showing debug info
+#   ansible.builtin.debug:
+#     var: users_manage_user
+
+- name: user | Force pw change user {{ user.name }}
+  ansible.builtin.shell: passwd -e {{ user.name }}
+  when:
+    - user.change_passwd is defined
+    - user.change_passwd
+    - users_manage_user.changed
+    - users_manage_user.state == 'present'
 
 - name: user | Set sudo options for {{ user.name }}
   ansible.builtin.template:
