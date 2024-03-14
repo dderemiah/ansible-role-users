@@ -30,6 +30,7 @@
     non_unique: "{{ user.non_unique | default(omit) }}"
     force: "{{ user.force | default(omit) }}"
     remove: "{{ user.remove | default('true') }}"
+    append: "{{ user.grp_append | default(omit) }}"
   register: users_manage_user
 # - name: Showing debug info
 #   ansible.builtin.debug:
