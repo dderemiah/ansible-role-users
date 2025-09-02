@@ -5,18 +5,21 @@
   gather_facts: true
 
   roles:
-    - role: ansible-role-users
+    - role: robertdebock.users
       # You can create groups:
       users_groups:
         - name: robertdb
           gid: 1024
         - name: users
-        # You can also remove groups.
+          # You can also remove groups.
         - name: notgroup
           state: absent
           # A system group is also possible.
         - name: systemgroup
           system: true
+          # A group with sudo options.
+        - name: mywheel
+          sudo_options: "ALL=(ALL) NOPASSWD: ALL"
 
       # You can create users.
       users:
