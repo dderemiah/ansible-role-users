@@ -109,9 +109,9 @@
         key: "{{ user.name }}"
         split: ":"
 
-    - name: user | Set base home directory to {{ getent_passwd[user.name][4] | dirname }}
+    - name: user | Set base home directory to {{ ansible_facts['getent_passwd'][user.name][4] | dirname }}
       ansible.builtin.set_fact:
-        users_home_base_dir: "{{ getent_passwd[user.name][4] | dirname }}"
+        users_home_base_dir: "{{ ansible_facts['getent_passwd'][user.name][4] | dirname }}"
 
   rescue:
     - name: user | User not found, using /home
@@ -132,6 +132,7 @@
 - name: user | Deploy authorized keys for {{ user.name }}
   ansible.posix.authorized_key:
     user: "{{ user.name }}"
+    exclusive: "{{ user.exclusive_keys | default(false) }}"
     state: present
     key: "{{ item }}"
   loop: "{{ user.authorized_keys }}"
